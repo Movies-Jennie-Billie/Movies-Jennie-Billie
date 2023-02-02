@@ -1,0 +1,44 @@
+[
+    {
+      "id": 1,
+      "title": "Knives Out",
+      "rating": 9,
+      "director": "Rian Johnson",
+      "genre": "Mystery"
+    },
+    {
+      "id": 2,
+      "title": "O Brother, Where Art Thou",
+      "rating": 8,
+      "director": "Coen Brothers",
+      "genre": "Comedy"
+    },
+    {
+      "id": 3,
+      "title": "The Adam Project",
+      "rating": 9,
+      "director": "Shawn Levy",
+      "genre": "Comedy"
+    },
+    {
+      "id": 4,
+      "title": "The Lord of the Rings Trilogy",
+      "rating": 8,
+      "director": "Peter Jackson",
+      "genre": "Fantasy"
+    },
+    {
+      "id": 5,
+      "title": "Hachi",
+      "rating": 8,
+      "director": "Lasse Hallstrom",
+      "genre": "Drama"
+    },
+    {
+      "id": 7,
+      "title": "yay",
+      "rating": 4,
+      "director": "Jimbobyo",
+      "genre": "sci-fi"
+    }
+]

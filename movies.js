@@ -1,39 +1,45 @@
 (function (){
     "use strict";
 
-    function createMovie(){
-        const movieObj = {
-            id: 7,
-            title: 'yay',
-            rating: 4,
-            director: "Jimbobyo",
-            genre: "sci-fi"
-        };
-        return movieObj
-    }
-
+    // function createMovie(){
+    //     const movieObj = {
+    //         id: 7,
+    //         title: 'yay',
+    //         rating: 4,
+    //         director: "Jimbobyo",
+    //         genre: "sci-fi"
+    //     };
+    //     return movieObj
+    // }
+    //
     const url = 'https://brook-pale-army.glitch.me/movies';
-    const options = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(createMovie()),
-    };
-    fetch(url, options)
-        .then(response => response.json()) /* review was created successfully */
-        .then((json) => json)
-        .catch(error => console.error(error) );
+    // const options = {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify(createMovie()),
+    // };
+    // // make cards
+    // fetch(url, options)
+    //     .then(response => response.json()) /* review was created successfully */
+    //     .then((json) => json)
+    //     .catch(error => console.error(error) );
 
+    //    console.log fetch
     fetch(url, {method: "GET"})
         .then(response => response.json()) /* review was created successfully */
         .then((json) => console.log(json))
         .catch( error => console.error(error) ); /* handle errors */
 
-    fetch(url, {method: "GET"})
-        .then(response => response.json()) /* review was created successfully */
-        .then((json) => writeCards(json))
-        .catch(error => console.error(error) ); /* handle errors */
+    //makes cards info
+    function update(){
+        fetch(url, {method: "GET"})
+            .then(response => response.json()) /* review was created successfully */
+            .then((json) => writeCards(json))
+            .catch(error => console.error(error) ); /* handle errors */
+    }
+
 
     function writeCards(data){
         let html = '';
@@ -41,26 +47,23 @@
             html += createCard(data[i]);
         }
         $("#movie-cards").html(html)
-
         $('.my-btn-delete').click(function(){
-
             //    get button id and get matching card id
             let targetID = parseInt($(this).attr("data-id"))
             for (let i = 0; i < data.length; i++) {
-                if((i) === targetID){
+                if((data[i].id) === targetID){
                     deleteCard(data[i]);
-                    console.log('true')
-                } else {
-                    console.log('false')
-                    console.log(`i: ${i}`)
-                    console.log(`targetID: ${targetID}`)
+
                 }
-
             }
-            //    get whole card
-
-            //    then send card to deleteCard
         })
+    }
+
+    function deleteCard(card){
+        let targetID = card.id
+        console.log(card);
+        fetch(`${url}/${targetID}`, {method: "DELETE"})
+            .then(response => update());
     }
 
     function createCard(data){
@@ -88,13 +91,9 @@
     //     .then((json) => deleteCard(json[5]))
     //     .catch(error => console.error(error) ); /* handle errors */
     //
-    function deleteCard(card){
-        let targetID = card.id
-        console.log(card);
-        fetch(`${url}/${targetID}`, {method: "DELETE"})
-        .then(response => response.json());
-    }
-
-
+    $(document).ready(function() {
+        $("#loading-img").css("display", "none")
+    })
+    update()
 
 })();
