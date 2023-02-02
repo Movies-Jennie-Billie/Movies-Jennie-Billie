@@ -23,7 +23,7 @@
     fetch(url, options)
         .then(response => response.json()) /* review was created successfully */
         .then((json) => json)
-        .catch( error => console.error(error) );
+        .catch(error => console.error(error) );
 
     fetch(url, {method: "GET"})
         .then(response => response.json()) /* review was created successfully */
@@ -41,6 +41,26 @@
             html += createCard(data[i]);
         }
         $("#movie-cards").html(html)
+
+        $('.my-btn-delete').click(function(){
+
+            //    get button id and get matching card id
+            let targetID = parseInt($(this).attr("data-id"))
+            for (let i = 0; i < data.length; i++) {
+                if((i) === targetID){
+                    deleteCard(data[i]);
+                    console.log('true')
+                } else {
+                    console.log('false')
+                    console.log(`i: ${i}`)
+                    console.log(`targetID: ${targetID}`)
+                }
+
+            }
+            //    get whole card
+
+            //    then send card to deleteCard
+        })
     }
 
     function createCard(data){
@@ -57,27 +77,24 @@
         html += `<li>Genre: ${data.genre}</li>`
         html += `</ul>`
         html += `</div>`
-        html += `<a href="#" data-id="${data.id}" class="btn btn-delete btn-primary">Go somewhere</a>`
+        html += `<button type="button" data-id="${data.id}" class="btn my-btn-delete btn-primary">Delete</button>`
         html+= `</div> </div>`
+
         return html
     }
-
-    fetch(url, {method: "GET"})
-        .then(response => response.json()) /* review was created successfully */
-        .then((json) => deleteCard(json[5]))
-        .catch(error => console.error(error) ); /* handle errors */
-
+    //
+    // fetch(url, {method: "GET"})
+    //     .then(response => response.json()) /* review was created successfully */
+    //     .then((json) => deleteCard(json[5]))
+    //     .catch(error => console.error(error) ); /* handle errors */
+    //
     function deleteCard(card){
         let targetID = card.id
         console.log(card);
         fetch(`${url}/${targetID}`, {method: "DELETE"})
         .then(response => response.json())
     }
-    $(".btn-delete").click( function (){
-        console.log($(this).attr("data-id"))
-    //    get button id
-    //    get matching card id
-    //    get whole card
-    //    then send card to deleteCard
-    })
+
+
+
 })();
