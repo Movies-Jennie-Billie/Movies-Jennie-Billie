@@ -92,7 +92,7 @@
         let targetID = card.id
         console.log(card);
         fetch(`${url}/${targetID}`, {method: "DELETE"})
-        .then(response => response.json())
+        .then(response => response.json());
     }
 
 
