@@ -1,6 +1,5 @@
 (function (){
     "use strict";
-    console.log("yay")
 
     function createMovie(){
         const movieObj = {
@@ -9,39 +8,65 @@
             rating: 4,
             genre: "sci-fi"
         };
+        return movieObj
     }
 
-    // const url = 'https://brook-pale-army.glitch.me/movies';
+    const url = 'https://brook-pale-army.glitch.me/movies';
     // const options = {
     //     method: 'POST',
     //     headers: {
     //         'Content-Type': 'application/json',
     //     },
-    //     body: JSON.stringify(movieObj),
+    //     body: JSON.stringify(createMovie()),
     // };
-    // // fetch(url, options)
-    // //     .then( response => response.json()) /* review was created successfully */
-    // //     .then((json) => console.log(json))
-    // //     .catch( error => console.error(error) )
-    // fetch(url, {method: "GET"})
-    //     .then( response => response.json()) /* review was created successfully */
-    //     .then((json) => console.log(json))
-    //     .catch( error => console.error(error) ); /* handle errors */
+    // fetch(url, options)
 
-    function createCard(){
+    fetch(url, {method: "GET"})
+        .then(response => response.json()) /* review was created successfully */
+        .then((json) => console.log(json))
+        .catch( error => console.error(error) ); /* handle errors */
+
+    fetch(url, {method: "GET"})
+        .then(response => response.json()) /* review was created successfully */
+        .then((json) => writeCards(json))
+        .catch(error => console.error(error) ); /* handle errors */
+
+    function writeCards(data){
+        let html = '';
+        for (let i = 0; i < data.length; i++) {
+            html += createCard(data[i]);
+        }
+        $("#movie-cards").html(html)
+    }
+
+    function createCard(data){
         let html = "";
-        html += `<div className="card" style="width: 15rem;">`
+        html += `<div class="card" style="width: 15rem;">`
         html += `<img src="images/default-avatar-profile-vector-user-profile-default-avatar-profile-vector-user-profile-profile-179376714.jpg" 
                 class="card-img-top" alt="...">`
         html += `<div class="card-body">`
-        html += `<h5 class="card-title">Card title</h5>`
-        html += `<p class="card-text">Some quick example text to build on the card title and make up the bulk the card's content.</p>`
+        html += `<h5 class="card-title">${data.title}</h5>`
+        html += `<div class="card-text">`
+        html += `<ul>`
+        html += `<li>Rating: ${data.rating}</li>`
+        html += `<li>Director: ${data.director}</li>`
+        html += `<li>Genre: ${data.genre}</li>`
+        html += `</ul>`
+        html += `</div>`
         html += `<a href="#" class="btn btn-primary">Go somewhere</a>`
         html+= `</div> </div>`
-        console.log(html)
         return html
     }
-    $("#movie-cards").html(createCard())
 
+    fetch(url, {method: "GET"})
+        .then(response => response.json()) /* review was created successfully */
+        .then((json) => deleteCard(json[5]))
+        .catch(error => console.error(error) ); /* handle errors */
 
+    function deleteCard(card){
+        let targetID = card.id
+        console.log(card);
+        fetch(`${url}/${targetID}`, {method: "DELETE"})
+        .then(response => response.json())
+    }
 })();
