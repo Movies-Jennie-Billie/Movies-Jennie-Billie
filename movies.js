@@ -1,30 +1,12 @@
 (function (){
     "use strict";
 
-    // function createMovie(){
-    //     const movieObj = {
-    //         id: 7,
-    //         title: 'yay',
-    //         rating: 4,
-    //         director: "Jimbobyo",
-    //         genre: "sci-fi"
-    //     };
-    //     return movieObj
-    // }
+    //
     //
     const url = 'https://brook-pale-army.glitch.me/movies';
-    // const options = {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify(createMovie()),
-    // };
+    //
     // // make cards
-    // fetch(url, options)
-    //     .then(response => response.json()) /* review was created successfully */
-    //     .then((json) => json)
-    //     .catch(error => console.error(error) );
+    //
 
     //    console.log fetch
     fetch(url, {method: "GET"})
@@ -37,7 +19,10 @@
         fetch(url, {method: "GET"})
             .then(response => response.json()) /* review was created successfully */
             .then((json) => writeCards(json))
-            .catch(error => console.error(error) ); /* handle errors */
+            .catch(error => console.error(error) ) /* handle errors */
+            .finally(function(){
+                    $("#loading-img").css("display", "none")
+            })
     }
 
 
@@ -46,6 +31,7 @@
         for (let i = 0; i < data.length; i++) {
             html += createCard(data[i]);
         }
+
         $("#movie-cards").html(html)
         $('.my-btn-delete').click(function(){
             //    get button id and get matching card id
@@ -57,6 +43,7 @@
                 }
             }
         })
+
     }
 
     function deleteCard(card){
@@ -91,9 +78,32 @@
     //     .then((json) => deleteCard(json[5]))
     //     .catch(error => console.error(error) ); /* handle errors */
     //
-    $(document).ready(function() {
-        $("#loading-img").css("display", "none")
-    })
+    // $(document).ready(function() {
+    //     $("#loading-img").css("display", "none")
+    // })
     update()
+
+    $('#new-movie-submit').click(function(){
+
+        const movieObj = {
+            id: 20,
+            title: $('#title').val(),
+            rating: $('#rating').val(),
+            director: $('#director').val(),
+            genre: $('#genre').val()
+        };
+        console.log(movieObj)
+        const options = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(movieObj),
+            };
+        fetch(url, options)
+            .then(response => response.json()) /* review was created successfully */
+            .then((json) => console.log(json))
+            .catch(error => console.error(error) );
+    })
 
 })();
