@@ -1,24 +1,34 @@
 (function (){
     "use strict";
 
-    //
-    //
     const url = 'https://brook-pale-army.glitch.me/movies';
-    //
-    // // make cards
-    //
 
+    function getID (){
+        //start at 1 and comp all until unique num found
+        for (let i = 1; i < movies.length; i++) {
+            if(i == movies[i].id){
+                continue;
+            }
+            return i;
+        }
+    }
     //    console.log fetch
     fetch(url, {method: "GET"})
         .then(response => response.json()) /* review was created successfully */
         .then((json) => console.log(json))
         .catch( error => console.error(error) ); /* handle errors */
 
+    //make json global and then put to getId
+    let movies = undefined
     //makes cards info
     function update(){
         fetch(url, {method: "GET"})
             .then(response => response.json()) /* review was created successfully */
-            .then((json) => writeCards(json))
+            // .then((json) => writeCards(json))
+            .then(function(json) {
+                writeCards(json)
+                movies = json
+            })
             .catch(error => console.error(error) ) /* handle errors */
             .finally(function(){
                     $("#loading-img").css("display", "none")
@@ -83,10 +93,12 @@
     // })
     update()
 
-    $('#new-movie-submit').click(function(){
 
+
+    $('#new-movie-submit').click(function(){
+        // e.preventDefault()
         const movieObj = {
-            id: 20,
+            id: movies.length + 1,
             title: $('#title').val(),
             rating: $('#rating').val(),
             director: $('#director').val(),
@@ -100,10 +112,14 @@
                 },
                 body: JSON.stringify(movieObj),
             };
+        // console.log(options)
         fetch(url, options)
-            .then(response => response.json()) /* review was created successfully */
-            .then((json) => console.log(json))
+            .then(function (response){
+                console.log("hey")
+                update()
+            })
             .catch(error => console.error(error) );
+
     })
 
 })();
