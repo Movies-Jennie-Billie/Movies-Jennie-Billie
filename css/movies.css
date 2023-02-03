@@ -5,3 +5,25 @@
     left: 50%;
     transform: translate(-50%, -50%);
 }
+.card{
+    width: 15rem;
+    margin: 2em 2em;
+}
+#inputAlign{
+    /*margin: 5em;*/
+    text-align: center;
+}
+#new-movie-form{
+    width: 30rem;
+    height: 10rem;
+    justify-content: center;
+}
+.my-btn-delete{
+    background-color: red;
+    border: red
+
+}
+.my-btn-edit{
+    /*width: 30rem;*/
+    margin-left: 3em;
+}

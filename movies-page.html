@@ -10,26 +10,28 @@
 <h1 id="status">Movies!</h1>
 <div class="container-fluid d-flex">
 
-        <form id="new-movie-form" class="row" style="width: 20rem;">
-            <div class="mb-3 col">
+        <form id="new-movie-form" class="row" >
+            <div id="inputAlign" class="mb-3 row">
                 <label for="title" class="form-label">Movie Title</label>
                 <input type="text" class="form-control" id="title">
             </div>
-            <div class="mb-3 col">
+            <div id="inputAlign" class="mb-3 row">
                 <label for="rating" class="form-label">Rating</label>
                 <input type="text" class="form-control" id="rating">
             </div>
-            <div class="mb-3 col">
+            <div id="inputAlign" class="mb-3 row">
                 <label for="director" class="form-label">Director</label>
                 <input type="text" class="form-control" id="director">
             </div>
-            <div class="mb-3 col">
+            <div id="inputAlign" class="mb-3 row">
                 <label for="genre" class="form-label">Genre</label>
                 <input type="text" class="form-control" id="genre">
             </div>
             <button type="button" class="btn btn-primary col" id="new-movie-submit">Submit</button>
         </form>
-        <div id="movie-cards"></div>
+        <div class="row">
+            <div id="movie-cards" class="mb-3 row"></div>
+        </div>
 
 </div>
 
@@ -40,6 +42,7 @@
 <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
         crossorigin="anonymous">
 </script>
+<script src="https://kit.fontawesome.com/225426762d.js" crossorigin="anonymous"></script>
 <script src="data/movieData.json"></script>
 <script src="movies.js"></script>
 
