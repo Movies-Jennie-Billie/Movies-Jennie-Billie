@@ -22,7 +22,7 @@
     fetch(url, {method: "GET"})
         .then(response => response.json()) /* review was created successfully */
         .then((json) => console.log(json))
-        .catch( error => console.error(error) ); /* handle errors */
+        .catch(error => console.error(error) ); /* handle errors */
 
     //make json global and then put to getId
     let movies = undefined
@@ -42,10 +42,10 @@
     }
 
 
-    function writeCards(data){
+        async function writeCards(data){
         let html = '';
         for (let i = 0; i < data.length; i++) {
-            html += createCard(data[i]);
+            html += await createCard(data[i]);
         }
 
         $("#movie-cards").html(html)
@@ -55,10 +55,10 @@
             for (let i = 0; i < data.length; i++) {
                 if((data[i].id) === targetID){
                     deleteCard(data[i]);
-
                 }
             }
         })
+
         $(".my-btn-edit").click(function (){
             let targetID = parseInt($(this).attr("data-id"))
             for (let i = 0; i < data.length; i++) {
@@ -71,7 +71,6 @@
                 }
             }
         })
-
     }
 
     function deleteCard(card){
@@ -81,11 +80,33 @@
             .then(response => update());
     }
 
-    function createCard(data){
+        async function createCard(data){
+        const OMDB_API_KEY = '85c9b810'
+        //get movie poster from OMDB
+        const defaultPosterImg = 'images/defaultPoster.jpg'
+        let posterImgURL = defaultPosterImg
+        function urlify(title){
+            title = title.replace(/\s+/g, '+');
+            return title
+        }
+        let ApiUrl = `http://www.omdbapi.com/?t=${urlify(data.title)}&apikey=${OMDB_API_KEY}`
+        posterImgURL = await fetch(ApiUrl, {method: "GET"})
+            .then(response => response.json())
+            .then((json) => {
+                if(!json.Poster){
+                    return defaultPosterImg
+                } else{
+                    return json.Poster
+                }
+            })
+            .catch((json) => defaultPosterImg);
+
+        //attempt to set img equal to that src
+        //if it fails, use default img
+
         let html = "";
-        html += `<div class="card" style="width: 15rem;">`
-        html += `<img src="images/default-avatar-profile-vector-user-profile-default-avatar-profile-vector-user-profile-profile-179376714.jpg" 
-                class="card-img-top" alt="...">`
+        html += `<div class="card">`
+        html += `<img src="${posterImgURL}" class="card-img-top" alt="Movie Poster">`
         html += `<div class="card-body">`
         html += `<h5 class="card-title">${data.title}</h5>`
         html += `<div class="card-text">`
@@ -96,7 +117,7 @@
         html += `</ul>`
         html += `</div>`
         html += `<button type="button" data-id="${data.id}" class="btn my-btn-delete btn-primary"><i class="fa-solid fa-trash"></i></button>`
-        html += `<button type="button" data-id="${data.id}" class="btn my-btn-edit btn-success"><i class="fa-solid fa-pen-to-square"></i></button>`
+        html += `<button type="button" data-id="${data.id}" class="btn my-btn-edit btn-success">Edit</button>`
         html+= `</div> </div>`
 
         return html
