@@ -5,12 +5,18 @@
 
     function getID (){
         //start at 1 and comp all until unique num found
-        for (let i = 1; i < movies.length; i++) {
-            if(i == movies[i].id){
-                continue;
-            }
-            return i;
+        let ids = []
+        for (let i = 0; i < movies.length; i++) {
+            ids.push(movies[i].id);
         }
+        console.log(ids);
+        for (let i = 1; i <= movies.length; i++) {
+            console.log(i)
+            if(!ids.includes(i)){
+                return i;
+            }
+        }
+        return movies.length+1
     }
     //    console.log fetch
     fetch(url, {method: "GET"})
@@ -98,7 +104,7 @@
     $('#new-movie-submit').click(function(){
         // e.preventDefault()
         const movieObj = {
-            id: movies.length + 1,
+            id: getID(),
             title: $('#title').val(),
             rating: $('#rating').val(),
             director: $('#director').val(),
@@ -115,7 +121,6 @@
         // console.log(options)
         fetch(url, options)
             .then(function (response){
-                console.log("hey")
                 update()
             })
             .catch(error => console.error(error) );
