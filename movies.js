@@ -59,6 +59,18 @@
                 }
             }
         })
+        $(".my-btn-edit").click(function (){
+            let targetID = parseInt($(this).attr("data-id"))
+            for (let i = 0; i < data.length; i++) {
+                if((data[i].id) === targetID){
+                    $('#title').val(data[i].title),
+                    $('#rating').val(data[i].rating),
+                    $('#director').val(data[i].director),
+                    $('#genre').val(data[i].genre)
+                    deleteCard(data[i]);
+                }
+            }
+        })
 
     }
 
@@ -84,6 +96,7 @@
         html += `</ul>`
         html += `</div>`
         html += `<button type="button" data-id="${data.id}" class="btn my-btn-delete btn-primary">Delete</button>`
+        html += `<button type="button" data-id="${data.id}" class="btn my-btn-edit btn-success">Edit</button>`
         html+= `</div> </div>`
 
         return html
@@ -99,10 +112,17 @@
     // })
     update()
 
+    function clearForm(){
+            $('#title').val(""),
+            $('#rating').val(""),
+            $('#director').val(""),
+            $('#genre').val("")
 
+    }
 
     $('#new-movie-submit').click(function(){
         // e.preventDefault()
+
         const movieObj = {
             id: getID(),
             title: $('#title').val(),
@@ -125,6 +145,8 @@
             })
             .catch(error => console.error(error) );
 
+        clearForm()
     })
+
 
 })();
