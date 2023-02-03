@@ -160,8 +160,8 @@
             html += `<li id="new-card-genre">${result.Genre}</li>`
             html += `</ul>`
             html += `</div>`
-            html += `<button type="button" id="modal-accept" class="btn btn-success"><i class="fa-solid fa-pen-to-square"></i></button>`
-            html += `<button type="button" id="modal-delete" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>`
+            html += `<button type="button" id="modal-delete" class="btn my-btn-delete btn-danger"><i class="fa-solid fa-trash"></i></button>`
+            html += `<button type="button" id="modal-accept" class="btn my-btn-edit btn-success"><i class="fa-regular fa-thumbs-up"></i></button>`
             html += `</div> </div>`
 
             return html
