@@ -16,16 +16,18 @@ body{
     margin: 2em;
     background-color: #2C74B3;
     color: white;
+    box-shadow: 5px 10px #0A2647;
 }
 
 #inputAlign{
-    /*margin: 5em;*/
     text-align: center;
 }
+
 #new-movie-form{
     width: 30rem;
     height: 10rem;
     justify-content: center;
+
 }
 .my-btn-delete{
     background-color: #0A2647;
