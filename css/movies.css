@@ -1,3 +1,9 @@
+*{
+    font-family: 'Crimson Text', serif;
+}
+body{
+    background-color: #144272;
+}
 #loading-img{
     width: 20%;
     position: absolute;
@@ -7,8 +13,11 @@
 }
 .card{
     width: 15rem;
-    margin: 2em 2em;
+    margin: 2em;
+    background-color: #2C74B3;
+    color: white;
 }
+
 #inputAlign{
     /*margin: 5em;*/
     text-align: center;
@@ -19,11 +28,41 @@
     justify-content: center;
 }
 .my-btn-delete{
-    background-color: red;
-    border: red
-
+    background-color: #0A2647;
+    border: #0A2647;
+    /*margin:;*/
 }
+
 .my-btn-edit{
-    /*width: 30rem;*/
-    margin-left: 3em;
+    margin-left: 50%;
+    background-color: #0A2647;
+    border: #0A2647;
+}
+
+.card-title{
+    text-align: center;
+    font-weight: bold;
+}
+ul{
+    list-style: none;
+}
+.heading{
+    background-color: #0A2647;
+    padding-bottom: 1rem;
+    color: white;
+}
+
+.wholeForm{
+    color: white;
+    position: sticky;
+    top: 6em;
+}
+
+.submitButton{
+    background-color: #2C74B3;
+    border: #2C74B3;
+    color: white;
+}
+img{
+    padding-top: 1em;
 }

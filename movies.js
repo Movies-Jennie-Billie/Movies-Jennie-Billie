@@ -95,7 +95,7 @@
         html += `<li>Genre: ${data.genre}</li>`
         html += `</ul>`
         html += `</div>`
-        html += `<button type="button" data-id="${data.id}" class="btn my-btn-delete btn-primary"><i class="fa-solid fa-trash"></i></button>`
+        html += `<button type="button" data-id="${data.id}" class="btn my-btn-delete btn-danger"><i class="fa-solid fa-trash"></i></button>`
         html += `<button type="button" data-id="${data.id}" class="btn my-btn-edit btn-success"><i class="fa-solid fa-pen-to-square"></i></button>`
         html+= `</div> </div>`
 
