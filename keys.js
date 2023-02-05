@@ -1,5 +1,0 @@
-const MAPBOX_API_KEY = "pk.eyJ1IjoibWFkbWFyY29zIiwiYSI6ImNsNWw0YWNobTBnY3AzanN4dzdpemhpeG0ifQ.OO7BegDPBkP3SV0CaLbnyQ";
-const OPENWEATHER_API_KEY = '59e1b99e68e6d9bdb350bf932c7ac068';
-const GITHUB_API_KEY = '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';
-const DISCORD_KEY = 'MTA2OTcwMzc0MDgzNzMzMTEwNw.GuqJV-.4bYWnb5ul44ZVyl3Vince_B6mZQ0nYwyOYrkCc'
-const OMDB_API_KEY = '85c9b810'
