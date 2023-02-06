@@ -1,7 +1,9 @@
 (function (){
     "use strict";
 
-    const url = 'https://brook-pale-army.glitch.me/movies';
+    const url = 'https://hollow-valiant-poultry.glitch.me/movies';
+    let editMode = false;
+    let editID = 0;
 
     function getID (){
         //start at 1 and comp all until unique num found
@@ -30,6 +32,7 @@
             .then(response => response.json()) /* review was created successfully */
             // .then((json) => writeCards(json))
             .then(function(json) {
+                json = sortMovies(json)
                 writeCards(json)
                 movies = json
             })
@@ -39,8 +42,7 @@
             })
     }
 
-
-        async function writeCards(data){
+    async function writeCards(data){
         let html = '';
         for (let i = 0; i < data.length; i++) {
             html += await createCard(data[i]);
@@ -65,11 +67,24 @@
                     $('#rating').val(data[i].rating),
                     $('#director').val(data[i].director),
                     $('#genre').val(data[i].genre)
-                    deleteCard(data[i]);
+                    editMode = true;
+                    editID = targetID;
                 }
             }
         })
     }
+
+    function setViewTarget(letter) {
+
+        for (let i = 0; i < movies.length; i++) {
+            if((movies[i].title.charAt(0)) === letter){
+                $(`div data-card-id${movies[i].id}`).scrollIntoView();
+            }
+        }
+    }
+
+
+
 
     function deleteCard(card){
         let targetID = card.id
@@ -97,11 +112,8 @@
             })
             .catch((json) => defaultPosterImg);
 
-        //attempt to set img equal to that src
-        //if it fails, use default img
-
         let html = "";
-        html += `<div class="card">`
+        html += `<div data-card-id="${data.id}" class="card">`
         html += `<img src="${posterImgURL}" class="card-img-top" alt="Movie Poster">`
         html += `<div class="card-body">`
         html += `<h5 class="card-title">${data.title}</h5>`
@@ -119,7 +131,10 @@
         return html
     }
 
-
+    function sortMovies (data){
+        let sortedData = data.sort((a, b) => a.title.localeCompare(b.title))
+        return sortedData
+    }
 
     update()
 
@@ -211,6 +226,9 @@
     }
 
     $('#new-movie-submit').click(function(){
+
+        let localURL = url;
+
         const movieObj = {
             id: getID(),
             title: $('#title').val(),
@@ -221,14 +239,22 @@
 
         console.log(movieObj)
         const options = {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(movieObj),
-            };
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(movieObj),
+        };
 
-        fetch(url, options)
+        if(editMode){
+            movieObj.id = editID;
+            options.method = 'PUT';
+            localURL = `${url}/${editID}`
+            editMode = false;
+            editID = 0;
+        }
+
+        fetch(localURL, options)
             .then(function (response){
                 update()
             })
