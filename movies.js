@@ -1,7 +1,9 @@
 (function (){
     "use strict";
 
-    const url = 'https://brook-pale-army.glitch.me/movies';
+    const url = 'https://hollow-valiant-poultry.glitch.me/movies';
+    let editMode = false;
+    let editID = 0;
 
     function getID (){
         //start at 1 and comp all until unique num found
@@ -24,12 +26,14 @@
 
     //make json global and then put to getId
     let movies = undefined
+
     //makes cards info
     function update(){
         fetch(url, {method: "GET"})
             .then(response => response.json()) /* review was created successfully */
             // .then((json) => writeCards(json))
             .then(function(json) {
+                json = sortMovies(json)
                 writeCards(json)
                 movies = json
             })
@@ -39,8 +43,7 @@
             })
     }
 
-
-        async function writeCards(data){
+    async function writeCards(data){
         let html = '';
         for (let i = 0; i < data.length; i++) {
             html += await createCard(data[i]);
@@ -65,10 +68,26 @@
                     $('#rating').val(data[i].rating),
                     $('#director').val(data[i].director),
                     $('#genre').val(data[i].genre)
-                    deleteCard(data[i]);
+                    editMode = true;
+                    editID = targetID;
                 }
             }
         })
+    }
+
+    function setViewTarget(letter) {
+
+        for (let i = 0; i < movies.length; i++) {
+            if((movies[i].title.charAt(0)) === letter){
+                const element = document.getElementById(`${movies[i].id}`);
+                console.log(element)
+                element.scrollIntoView();
+            } else if(movies[i].title.charAt(0).localeCompare(letter) < 1){
+                const element = document.getElementById(`${movies[i].id}`);
+                console.log(element)
+                element.scrollIntoView();
+            }
+        }
     }
 
     function deleteCard(card){
@@ -97,11 +116,8 @@
             })
             .catch((json) => defaultPosterImg);
 
-        //attempt to set img equal to that src
-        //if it fails, use default img
-
         let html = "";
-        html += `<div class="card">`
+        html += `<div id="${data.id}" class="card">`
         html += `<img src="${posterImgURL}" class="card-img-top" alt="Movie Poster">`
         html += `<div class="card-body">`
         html += `<h5 class="card-title">${data.title}</h5>`
@@ -119,7 +135,10 @@
         return html
     }
 
-
+    function sortMovies (data){
+        let sortedData = data.sort((a, b) => a.title.localeCompare(b.title))
+        return sortedData
+    }
 
     update()
 
@@ -135,8 +154,9 @@
             const cardObj = {
                 title: $('#search-bar').val()
             }
+            $('#search-bar').val('')
             let ApiUrl = `http://www.omdbapi.com/?t=${urlify(cardObj.title)}&apikey=${OMDB_API_KEY}`
-            const defaultPosterImg = 'images/defaultPoster.jpg'
+            const defaultPosterImg = 'images/crying.jpg'
             let posterImgURL = defaultPosterImg;
             let result = await fetch(ApiUrl, {method: "GET"})
                 .then(response => response.json())
@@ -144,9 +164,12 @@
 
             if (result.Poster) {
                 posterImgURL = result.Poster
+            } else{
+                result.Title = 'Not Found';
+                result.Genre = '';
+                result.Director = '';
+                result.imdbRating = '';
             }
-
-            let newId = getID()
 
             let html = "";
             html += `<div class="card">`
@@ -167,15 +190,38 @@
             return html
         }
 
+        function createAlphaButtonListeners(){
+            let alphaArray = alpha();
+
+            for (let i = 0; i < alphaArray.length; i++) {
+                $(`#${alphaArray[i].toLowerCase()}`).click(function(){
+                    console.log('clicked')
+                    setViewTarget(alphaArray[i]);
+                });
+            }
+        }
+
+    function alpha (){
+        let alphaArray = []
+        let char = '';
+
+        for (let i = 0; i < 26; i++) {
+            char = String.fromCharCode(65 + i);
+            alphaArray.push(char)
+        }
+        return alphaArray
+    }
 
     $('#btn-search').click(async function(){
         const html = await setHtml();
 
         $('#modal').html(html);
         $('#modal').css('display', 'block')
+        $('#dimmer').css('opacity', '.4')
 
         $('#modal-delete').click(function(){
             $('#modal').css('display', 'none');
+            $('#dimmer').css('opacity', '1')
         })
 
         $('#modal-accept').click(function(){
@@ -202,6 +248,7 @@
                 .catch(error => console.error(error) );
 
             $('#modal').css('display', 'none');
+            $('#dimmer').css('opacity', '1')
         })
     });
 
@@ -211,6 +258,9 @@
     }
 
     $('#new-movie-submit').click(function(){
+
+        let localURL = url;
+
         const movieObj = {
             id: getID(),
             title: $('#title').val(),
@@ -221,18 +271,27 @@
 
         console.log(movieObj)
         const options = {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(movieObj),
-            };
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(movieObj),
+        };
 
-        fetch(url, options)
+        if(editMode){
+            movieObj.id = editID;
+            options.method = 'PUT';
+            localURL = `${url}/${editID}`
+            editMode = false;
+            editID = 0;
+        }
+
+        fetch(localURL, options)
             .then(function (response){
                 update()
             })
             .catch(error => console.error(error) );
         clearForm()
     })
+    createAlphaButtonListeners()
 })();
