@@ -84,7 +84,10 @@ img{
     background-color: #2C74B3;
     border: 1px solid white;
     color: white;
+    margin-bottom: 5px;
 }
+
+
 .list-group-item:hover{
     background-color: #0A2647;
 }
