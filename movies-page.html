@@ -12,93 +12,94 @@
 <body>
 
 <div id="modal"></div>
+<div id="dimmer">
 
-<div class="d-flex flex-column heading">
-    <h1 id="status" class="text-center pt-2">Your Movie Database!</h1>
-    <div class="container-fluid d-flex justify-content-evenly">
-        <div class="row">
-            <div class="input-group col" id="search-container">
-                <input id="search-bar" type="search" class="form-control rounded" placeholder="Search"/>
-                <button id="btn-search" type="button" class="btn btn-outline-primary">search</button>
+    <div class="d-flex flex-column heading">
+        <h1 id="status" class="text-center pt-2">Your Movie Database!</h1>
+        <div class="container-fluid d-flex justify-content-evenly">
+            <div class="row justify-content-center">
+                <div class="input-group" id="search-container">
+                    <input id="search-bar" type="search" class="form-control rounded" placeholder="Search"/>
+                    <button id="btn-search" type="button" class="btn btn-outline-primary">search</button>
+                </div>
+                <div id="alpha-buttons" class="row mt-4">
+                    <ul class="list-group list-group-horizontal justify-content-center ">
+                        <li id="a" class="list-group-item">A</li>
+                        <li id="b" class="list-group-item">B</li>
+                        <li id="c" class="list-group-item">C</li>
+                        <li id="d" class="list-group-item">D</li>
+                        <li id="e" class="list-group-item">E</li>
+                        <li id="f" class="list-group-item">F</li>
+                        <li id="g" class="list-group-item">G</li>
+                        <li id="h" class="list-group-item">H</li>
+                        <li id="i" class="list-group-item">I</li>
+                        <li id="j" class="list-group-item">J</li>
+                        <li id="k" class="list-group-item">K</li>
+                        <li id="l" class="list-group-item">L</li>
+                        <li id="m" class="list-group-item">M</li>
+                        <li id="n" class="list-group-item">N</li>
+                        <li id="o" class="list-group-item">O</li>
+                        <li id="p" class="list-group-item">P</li>
+                        <li id="q" class="list-group-item">Q</li>
+                        <li id="r" class="list-group-item">R</li>
+                        <li id="s" class="list-group-item">S</li>
+                        <li id="t" class="list-group-item">T</li>
+                        <li id="u" class="list-group-item">U</li>
+                        <li id="v" class="list-group-item">V</li>
+                        <li id="w" class="list-group-item">W</li>
+                        <li id="x" class="list-group-item">X</li>
+                        <li id="y" class="list-group-item">Y</li>
+                        <li id="z" class="list-group-item">Z</li>
+                    </ul>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <ul>
-                <li>A</li>
-                <li>B</li>
-                <li>C</li>
-                <li>D</li>
-                <li>E</li>
-                <li>F</li>
-                <li>G</li>
-                <li>H</li>
-                <li>I</li>
-                <li>J</li>
-                <li>K</li>
-                <li>L</li>
-                <li>M</li>
-                <li>N</li>
-                <li>O</li>
-                <li>P</li>
-                <li>Q</li>
-                <li>R</li>
-                <li>S</li>
-                <li>T</li>
-                <li>U</li>
-                <li>V</li>
-                <li>W</li>
-                <li>X</li>
-                <li>Y</li>
-                <li>Z</li>
-            </ul>
         </div>
     </div>
+
+
+    <div class="container-fluid d-flex">
+
+            <form id="new-movie-form" class="row wholeForm" style="width: auto;">
+                <div class="inputAlign mb-3 row">
+                    <h3>Add or Edit Movie</h3>
+                    <label for="title" class="form-label">Movie Title</label>
+                    <input type="text" class="form-control" id="title">
+                </div>
+                <div class="inputAlign mb-3 row">
+                    <label for="rating" class="form-label">Rating</label>
+                    <input type="text" class="form-control" id="rating">
+                </div>
+                <div class="inputAlign mb-3 row">
+                    <label for="director" class="form-label">Director</label>
+                    <input type="text" class="form-control" id="director">
+                </div>
+                <div class="inputAlign mb-3 row">
+                    <label for="genre" class="form-label">Genre</label>
+                    <select id="genre" class="form-select">
+                        <option selected>Select a Genre</option>
+                        <option value="Comedy">Comedy</option>
+                        <option value="Drama">Drama</option>
+                        <option value="Action">Action</option>
+                        <option value="Horror">Horror</option>
+                        <option value="Mystery">Mystery</option>
+                        <option value="Sci-fi/Fantasy">Sci-fi/Fantasy</option>
+                        <option value="Musical">Musical</option>
+                        <option value="Animation">Animation</option>
+                        <option value="Anime">Anime</option>
+                        <option value="Documentary">Documentary</option>
+                        <option value="Family">Family</option>
+                        <option value="Other">Other</option>
+                    </select>
+    <!--                <input type="text" class="form-control" id="genre">-->
+                </div>
+                <button type="button" class="btn submitButton col" id="new-movie-submit">Submit</button>
+            </form>
+            <div class="row" style="width: auto;">
+                <div id="movie-cards" class="row justify-content-around"></div>
+            </div>
+
 </div>
-
-
-<div class="container-fluid d-flex">
-
-        <form id="new-movie-form" class="row wholeForm" style="width: auto;">
-            <div class="inputAlign mb-3 row">
-                <h3>Add or Edit Movie</h3>
-                <label for="title" class="form-label">Movie Title</label>
-                <input type="text" class="form-control" id="title">
-            </div>
-            <div class="inputAlign mb-3 row">
-                <label for="rating" class="form-label">Rating</label>
-                <input type="text" class="form-control" id="rating">
-            </div>
-            <div class="inputAlign mb-3 row">
-                <label for="director" class="form-label">Director</label>
-                <input type="text" class="form-control" id="director">
-            </div>
-            <div class="inputAlign mb-3 row">
-                <label for="genre" class="form-label">Genre</label>
-                <select id="genre" class="form-select">
-                    <option selected>Select a Genre</option>
-                    <option value="Comedy">Comedy</option>
-                    <option value="Drama">Drama</option>
-                    <option value="Action">Action</option>
-                    <option value="Horror">Horror</option>
-                    <option value="Mystery">Mystery</option>
-                    <option value="Sci-fi/Fantasy">Sci-fi/Fantasy</option>
-                    <option value="Musical">Musical</option>
-                    <option value="Animation">Animation</option>
-                    <option value="Anime">Anime</option>
-                    <option value="Documentary">Documentary</option>
-                    <option value="Family">Family</option>
-                    <option value="Other">Other</option>
-                </select>
-<!--                <input type="text" class="form-control" id="genre">-->
-            </div>
-            <button type="button" class="btn submitButton col" id="new-movie-submit">Submit</button>
-        </form>
-        <div class="row" style="width: auto;">
-            <div id="movie-cards" class="row justify-content-around"></div>
-        </div>
-
 </div>
-
 <div id="loading-img">
     <iframe src="https://giphy.com/embed/3o7bu3XilJ5BOiSGic" class="giphy-embed" allowFullScreen></iframe></div>
 

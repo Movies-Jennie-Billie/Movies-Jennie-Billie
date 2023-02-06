@@ -26,6 +26,7 @@
 
     //make json global and then put to getId
     let movies = undefined
+
     //makes cards info
     function update(){
         fetch(url, {method: "GET"})
@@ -78,13 +79,16 @@
 
         for (let i = 0; i < movies.length; i++) {
             if((movies[i].title.charAt(0)) === letter){
-                $(`div data-card-id${movies[i].id}`).scrollIntoView();
+                const element = document.getElementById(`${movies[i].id}`);
+                console.log(element)
+                element.scrollIntoView();
+            } else if(movies[i].title.charAt(0).localeCompare(letter) < 1){
+                const element = document.getElementById(`${movies[i].id}`);
+                console.log(element)
+                element.scrollIntoView();
             }
         }
     }
-
-
-
 
     function deleteCard(card){
         let targetID = card.id
@@ -113,7 +117,7 @@
             .catch((json) => defaultPosterImg);
 
         let html = "";
-        html += `<div data-card-id="${data.id}" class="card">`
+        html += `<div id="${data.id}" class="card">`
         html += `<img src="${posterImgURL}" class="card-img-top" alt="Movie Poster">`
         html += `<div class="card-body">`
         html += `<h5 class="card-title">${data.title}</h5>`
@@ -150,8 +154,9 @@
             const cardObj = {
                 title: $('#search-bar').val()
             }
+            $('#search-bar').val('')
             let ApiUrl = `http://www.omdbapi.com/?t=${urlify(cardObj.title)}&apikey=${OMDB_API_KEY}`
-            const defaultPosterImg = 'images/defaultPoster.jpg'
+            const defaultPosterImg = 'images/crying.jpg'
             let posterImgURL = defaultPosterImg;
             let result = await fetch(ApiUrl, {method: "GET"})
                 .then(response => response.json())
@@ -159,9 +164,12 @@
 
             if (result.Poster) {
                 posterImgURL = result.Poster
+            } else{
+                result.Title = 'Not Found';
+                result.Genre = '';
+                result.Director = '';
+                result.imdbRating = '';
             }
-
-            let newId = getID()
 
             let html = "";
             html += `<div class="card">`
@@ -182,15 +190,38 @@
             return html
         }
 
+        function createAlphaButtonListeners(){
+            let alphaArray = alpha();
+
+            for (let i = 0; i < alphaArray.length; i++) {
+                $(`#${alphaArray[i].toLowerCase()}`).click(function(){
+                    console.log('clicked')
+                    setViewTarget(alphaArray[i]);
+                });
+            }
+        }
+
+    function alpha (){
+        let alphaArray = []
+        let char = '';
+
+        for (let i = 0; i < 26; i++) {
+            char = String.fromCharCode(65 + i);
+            alphaArray.push(char)
+        }
+        return alphaArray
+    }
 
     $('#btn-search').click(async function(){
         const html = await setHtml();
 
         $('#modal').html(html);
         $('#modal').css('display', 'block')
+        $('#dimmer').css('opacity', '.4')
 
         $('#modal-delete').click(function(){
             $('#modal').css('display', 'none');
+            $('#dimmer').css('opacity', '1')
         })
 
         $('#modal-accept').click(function(){
@@ -217,6 +248,7 @@
                 .catch(error => console.error(error) );
 
             $('#modal').css('display', 'none');
+            $('#dimmer').css('opacity', '1')
         })
     });
 
@@ -261,4 +293,5 @@
             .catch(error => console.error(error) );
         clearForm()
     })
+    createAlphaButtonListeners()
 })();
